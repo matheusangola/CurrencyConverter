@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    ConverterApp()
 
                 }
             }
@@ -52,6 +52,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     CurrencyConverterTheme {
-        MainScreen()
+        MainScreen(onNextButtonClicked = {}, onCryptoButtonClicked = {})
     }
 }

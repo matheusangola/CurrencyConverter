@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">Currency Converter</string>
+    <string name="app_nameCryptos">Cryptos</string>
+    <string name="app_nameCurrencies">Currencies</string>
+    <string name="app_nameCrypto">Crypto Converter</string>
+    <string name="USD">USD</string>
+    <string name="USD1">United States Dollar</string>
+    <string name="EUR">EUR</string>
+    <string name="EUR1">Euro</string>
+    <string name="JPY">JPY</string>
+    <string name="JPY1">Japanese Yen</string>
+    <string name="GBP">GBP</string>
+    <string name="GBP1">British Pound Sterling</string>
+    <string name="CHF">CHF</string>
+    <string name="CHF1">Swiss Franc</string>
+    <string name="CAD">CAD</string>
+    <string name="CAD1">Canadian Dollar</string>
+    <string name="AUD">AUD</string>
+    <string name="AUD1">Australian Dollar</string>
+    <string name="CNY">CNY</string>
+    <string name="CNY1">Chinese Yuan</string>
+    <string name="SEK">SEK</string>
+    <string name="SEK1">Swedish Krona</string>
+    <string name="NZD">NZD</string>
+    <string name="NZD1">New Zealand Dollar</string>
+
+    <string name="BTC">BTC</string>
+    <string name="BTC1">Bitcoin</string>
+    <string name="ETH">ETH</string>
+    <string name="ETH1">Ethereum</string>
+    <string name="BNB">BNB</string>
+    <string name="BNB1">Binance Coin</string>
+    <string name="USDT">USDT</string>
+    <string name="USDT1">Tether</string>
+    <string name="SOL">SOL</string>
+    <string name="SOL1">Solana</string>
+    <string name="ADA">ADA</string>
+    <string name="ADA1">Cardano</string>
+    <string name="XRP">XRP</string>
+    <string name="XRP1">Ripple</string>
+    <string name="DOT">DOT</string>
+    <string name="DOT1">Polkadot</string>
+    <string name="DOGE">DOGE</string>
+    <string name="DOGE1">Dogecoin</string>
+    <string name="AVAX">AVAX</string>
+    <string name="AVAX1">Avalanche</string>
 </resources>

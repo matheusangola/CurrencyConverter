@@ -36,7 +36,8 @@ import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 
 @Composable
 fun MainScreen(
-
+    onNextButtonClicked: () -> Unit,
+    onCryptoButtonClicked: () -> Unit,
 ) {
     var enteredValue1 by remember { mutableStateOf("") }
     var enteredValue2 by remember { mutableStateOf("") }
@@ -44,7 +45,7 @@ fun MainScreen(
         Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
                 modifier = Modifier.fillMaxWidth() .padding(10.dp),
-                onClick = {  }
+                onClick = onNextButtonClicked
             ) {
                 Text(
                     text = "USD",
@@ -57,7 +58,7 @@ fun MainScreen(
             }
             Button(
                 modifier = Modifier.fillMaxWidth() .padding(10.dp),
-                onClick = {  }
+                onClick = onNextButtonClicked
             ) {
                 Text(
                     text = "CAD",
@@ -81,7 +82,7 @@ fun MainScreen(
                 }
 
                 OutlinedButton(
-                    onClick = {  },
+                    onClick = onCryptoButtonClicked,
                     modifier = Modifier,
                 ) {
                     Text(
@@ -99,8 +100,8 @@ fun MainScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun GameScreenPreview() {
+fun MainScreenPreview() {
     CurrencyConverterTheme {
-        MainScreen()
+        MainScreen(onNextButtonClicked = {}, onCryptoButtonClicked = {})
     }
 }
