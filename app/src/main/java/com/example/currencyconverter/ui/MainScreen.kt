@@ -32,15 +32,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.currencyconverter.Greeting
 import com.example.currencyconverter.R
+import com.example.currencyconverter.ui.model.Currency
+import com.example.currencyconverter.ui.model.CurrencyRepository
 import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 
 @Composable
 fun MainScreen(
+    newCurrency: Currency,
+    currency: Currency,
     onNextButtonClicked: () -> Unit,
     onCryptoButtonClicked: () -> Unit,
 ) {
     var enteredValue1 by remember { mutableStateOf("") }
     var enteredValue2 by remember { mutableStateOf("") }
+//    fun CalcInput() {
+//        if (enteredValue1 == enteredValue2) {
+//
+//        }
+//    }
     Row {
         Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
@@ -48,7 +57,7 @@ fun MainScreen(
                 onClick = onNextButtonClicked
             ) {
                 Text(
-                    text = "USD",
+                    text = stringResource(newCurrency.nameRes),
                     fontSize = 16.sp
                 )
             }
@@ -61,7 +70,7 @@ fun MainScreen(
                 onClick = onNextButtonClicked
             ) {
                 Text(
-                    text = "CAD",
+                    text = stringResource(currency.nameRes),
                     fontSize = 16.sp
                 )
             }
@@ -91,8 +100,6 @@ fun MainScreen(
                     )
                 }
             }
-
-
         }
     }
 
@@ -102,6 +109,6 @@ fun MainScreen(
 @Composable
 fun MainScreenPreview() {
     CurrencyConverterTheme {
-        MainScreen(onNextButtonClicked = {}, onCryptoButtonClicked = {})
+        MainScreen(currency = CurrencyRepository.currencies[0] ,onNextButtonClicked = {}, onCryptoButtonClicked = {}, newCurrency = CurrencyRepository.currencies[3])
     }
 }

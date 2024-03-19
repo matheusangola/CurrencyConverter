@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -50,27 +51,36 @@ import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 
 @Composable
 fun CurrencyListPage(
-    currencies: List<Currency>, modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp), onNextButtonClicked: () -> Unit
+    currencies: List<Currency>, modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp), onCardClicked: () -> Unit, onNextButtonClicked: () -> Unit
 ) {
     LazyColumn(contentPadding = contentPadding) {
         itemsIndexed(currencies) { _, currency ->
             CurrencyListItems(
                 currency = currency,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                onCoinClicked = {
+                    var newCurrency = 1
+                    currency.nameRes = newCurrency
+                },
+                onCardClicked = {}
             )
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CurrencyListItems(
     currency: Currency,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCoinClicked: () -> Unit,
+    onCardClicked: () -> Unit,
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = modifier,
+        onClick = onCardClicked
     ) {
         Row(
             modifier = Modifier
@@ -111,6 +121,6 @@ fun CurrencyListItems(
 @Composable
 fun CurrencyListPagePreview() {
     CurrencyConverterTheme {
-        CurrencyListPage(currencies = currencies, onNextButtonClicked = { })
+        CurrencyListPage(currencies = currencies, onCardClicked = { }, onNextButtonClicked = {})
     }
 }
