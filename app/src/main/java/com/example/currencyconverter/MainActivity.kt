@@ -20,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.currencyconverter.ui.MainScreen
-import com.example.currencyconverter.ui.model.CurrencyRepository
 import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 
 class MainActivity : ComponentActivity() {
@@ -53,6 +52,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     CurrencyConverterTheme {
-        MainScreen(currency = CurrencyRepository.currencies[0], onNextButtonClicked = {}, onCryptoButtonClicked = {}, newCurrency = CurrencyRepository.currencies[3])
+        MainScreen(onNextButtonClicked = {}, onCryptoButtonClicked = {})
     }
 }

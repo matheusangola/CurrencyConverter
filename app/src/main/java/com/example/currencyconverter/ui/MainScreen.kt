@@ -1,5 +1,6 @@
 package com.example.currencyconverter.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,16 +31,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.currencyconverter.Greeting
 import com.example.currencyconverter.R
-import com.example.currencyconverter.ui.model.Currency
-import com.example.currencyconverter.ui.model.CurrencyRepository
+import com.example.currencyconverter.data.Currency
+import com.example.currencyconverter.data.DataSource
+import com.example.currencyconverter.data.DataSource.currencies
 import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
-
+val currencies = DataSource.currencies
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun MainScreen(
-    newCurrency: Currency,
-    currency: Currency,
+    //currency: Currency,
+    viewModel: AppViewModel = viewModel(),
     onNextButtonClicked: () -> Unit,
     onCryptoButtonClicked: () -> Unit,
 ) {
@@ -53,11 +57,11 @@ fun MainScreen(
     Row {
         Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
-                modifier = Modifier.fillMaxWidth() .padding(10.dp),
+                modifier = Modifier.fillMaxWidth().padding(10.dp),
                 onClick = onNextButtonClicked
             ) {
                 Text(
-                    text = stringResource(newCurrency.nameRes),
+                    text = "",
                     fontSize = 16.sp
                 )
             }
@@ -70,7 +74,7 @@ fun MainScreen(
                 onClick = onNextButtonClicked
             ) {
                 Text(
-                    text = stringResource(currency.nameRes),
+                    text = "",
                     fontSize = 16.sp
                 )
             }
@@ -109,6 +113,6 @@ fun MainScreen(
 @Composable
 fun MainScreenPreview() {
     CurrencyConverterTheme {
-        MainScreen(currency = CurrencyRepository.currencies[0] ,onNextButtonClicked = {}, onCryptoButtonClicked = {}, newCurrency = CurrencyRepository.currencies[3])
+       // MainScreen(currency = currency, onNextButtonClicked = {}, onCryptoButtonClicked = {})
     }
 }

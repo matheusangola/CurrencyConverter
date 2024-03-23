@@ -48,7 +48,7 @@ fun MainScreenCrypto(
                 onClick = onNextButtonClicked
             ) {
                 Text(
-                    text = "USD",
+                    text = "BTC",
                     fontSize = 16.sp
                 )
             }
@@ -61,7 +61,7 @@ fun MainScreenCrypto(
                 onClick = onNextButtonClicked
             ) {
                 Text(
-                    text = "CAD",
+                    text = "ETH",
                     fontSize = 16.sp
                 )
             }

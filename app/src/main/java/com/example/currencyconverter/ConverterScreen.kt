@@ -29,12 +29,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.currencyconverter.data.Currency
+import com.example.currencyconverter.ui.AppViewModel
 import com.example.currencyconverter.ui.CryptoListPage
+import com.example.currencyconverter.ui.CurrencyListItems
 import com.example.currencyconverter.ui.CurrencyListPage
 import com.example.currencyconverter.ui.MainScreen
 import com.example.currencyconverter.ui.MainScreenCrypto
-import com.example.currencyconverter.ui.model.CryptosRepository
-import com.example.currencyconverter.ui.model.CurrencyRepository
+//import com.example.currencyconverter.ui.currencies
+//import com.example.currencyconverter.ui.model.CurrencyRepository
 import javax.sql.DataSource
 
 enum class MainScreen(@StringRes val title: Int) {
@@ -49,6 +52,7 @@ enum class MainScreen(@StringRes val title: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConverterAppBar(
+    viewModel: AppViewModel = viewModel(),
     currentScreen: MainScreen,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
@@ -97,12 +101,11 @@ fun ConverterApp(
         ) {
             composable(route = MainScreen.Start.name) {
                 MainScreen(
+                    //currency = ,
                     onNextButtonClicked = {
                         navController.navigate(MainScreen.Currency.name)
                     },
                     onCryptoButtonClicked = {navController.navigate(MainScreen.MainCrypto.name)},
-                    currency = CurrencyRepository.currencies[0],
-                    newCurrency = CurrencyRepository.currencies[3]
                 )
             }
             composable(route = MainScreen.Currency.name) {
@@ -110,7 +113,6 @@ fun ConverterApp(
                 CurrencyListPage(
                     onNextButtonClicked = { navController.navigate(MainScreen.Start.name) },
                     onCardClicked = { navController.navigate(MainScreen.Start.name) },
-                    currencies = CurrencyRepository.currencies
                 )
             }
             composable(route = MainScreen.MainCrypto.name) {
@@ -123,7 +125,7 @@ fun ConverterApp(
                 val context = LocalContext.current
                 CryptoListPage(
                     onNextButtonClicked = { navController.navigate(MainScreen.Start.name) },
-                    cryptos = CryptosRepository.cryptos
+                    onCardClicked = { navController.navigate(MainScreen.MainCrypto.name) }
                 )
             }
         }
