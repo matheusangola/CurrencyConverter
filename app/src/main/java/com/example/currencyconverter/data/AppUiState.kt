@@ -2,13 +2,15 @@ package com.example.currencyconverter.data
 
 data class AppUiState(
 
+    var topClicked: Boolean,
+
     val quantityTopCurrency: Double = 0.0,
 
     val quantityBottomCurrency: Double = 0.0,
 
-    val topCurrency: Currency? = null,
+    var topCurrency: Currency? = Currency("USD", "United States Dollar"),
 
-    val bottomCurrency: Currency? = null
+    val bottomCurrency: Currency? = Currency("CAD", "Canadian Dollar")
 
 
 )

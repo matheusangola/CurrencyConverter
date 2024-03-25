@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -44,50 +45,50 @@ fun MainScreenCrypto(
     Row {
         Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
-                modifier = Modifier.fillMaxWidth() .padding(10.dp),
+                modifier = Modifier.fillMaxWidth() .padding(25.dp),
                 onClick = onNextButtonClicked
             ) {
                 Text(
                     text = "BTC",
-                    fontSize = 16.sp
+                    fontSize = 20.sp
                 )
             }
             Row (verticalAlignment = Alignment.CenterVertically){
-                Image(painter = painterResource(id = R.drawable.crypto), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(40.dp) .padding(8.dp))
+                Image(painter = painterResource(id = R.drawable.crypto), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
                 OutlinedTextField(value = enteredValue1, onValueChange = { newValue -> enteredValue1 = newValue } )
             }
             Button(
-                modifier = Modifier.fillMaxWidth() .padding(10.dp),
+                modifier = Modifier.fillMaxWidth() .padding(25.dp),
                 onClick = onNextButtonClicked
             ) {
                 Text(
                     text = "ETH",
-                    fontSize = 16.sp
+                    fontSize = 20.sp
                 )
             }
             Row (verticalAlignment = Alignment.CenterVertically){
-                Image(painter = painterResource(id = R.drawable.money), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(40.dp) .padding(8.dp))
+                Image(painter = painterResource(id = R.drawable.crypto), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
                 OutlinedTextField(value = enteredValue2, onValueChange = { newValue -> enteredValue2 = newValue } )
             }
             Row (verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center){
-                Button(
-                    modifier = Modifier,
+                OutlinedButton(
+                    modifier = Modifier.width(180.dp).height(130.dp).padding(top = 60.dp, start = 10.dp, end = 10.dp),
                     onClick = onCryptoButtonClicked
                 ) {
                     Text(
                         text = "Dollar",
-                        fontSize = 16.sp
+                        fontSize = 40.sp
                     )
                 }
 
-                OutlinedButton(
+                Button(
                     onClick = {  },
-                    modifier = Modifier,
+                    modifier = Modifier.width(180.dp).height(130.dp).padding(top = 60.dp, start = 10.dp, end = 2.dp),
                 ) {
                     Text(
                         text = "Crypto",
-                        fontSize = 16.sp
+                        fontSize = 40.sp
                     )
                 }
             }

@@ -31,7 +31,7 @@ import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 fun CurrencyListPage(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    onCardClicked: () -> Unit,
+    onCardClicked: (Currency) -> Unit,
     onNextButtonClicked: () -> Unit
 ) {
     val currencies = DataSource.currencies
@@ -41,11 +41,10 @@ fun CurrencyListPage(
                 currency = currency,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                onCoinClicked = {
-                    var setCurrency = ""
-                    currency.Ticker = setCurrency
+                    //setTopCurrency(currency)
+                onCardClicked = { onCardClicked(currency)
+                                println("currencylistitems: " + uiState.value.topCurrency)
                 },
-                onCardClicked = onCardClicked,
                 onNextButtonClicked = {}
             )
         }
@@ -57,7 +56,6 @@ fun CurrencyListPage(
 fun CurrencyListItems(
     currency: Currency,
     modifier: Modifier = Modifier,
-    onCoinClicked: () -> Unit,
     onCardClicked: () -> Unit,
     onNextButtonClicked: () -> Unit
 ) {

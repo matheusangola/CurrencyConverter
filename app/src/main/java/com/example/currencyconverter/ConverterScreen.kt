@@ -3,8 +3,6 @@ package com.example.currencyconverter
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,7 +19,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -29,16 +26,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.currencyconverter.data.Currency
 import com.example.currencyconverter.ui.AppViewModel
 import com.example.currencyconverter.ui.CryptoListPage
-import com.example.currencyconverter.ui.CurrencyListItems
 import com.example.currencyconverter.ui.CurrencyListPage
 import com.example.currencyconverter.ui.MainScreen
 import com.example.currencyconverter.ui.MainScreenCrypto
+import com.example.currencyconverter.ui.uiState
 //import com.example.currencyconverter.ui.currencies
 //import com.example.currencyconverter.ui.model.CurrencyRepository
-import javax.sql.DataSource
 
 enum class MainScreen(@StringRes val title: Int) {
     Start(title = R.string.app_name),
@@ -79,8 +74,11 @@ fun ConverterAppBar(
 
 @Composable
 fun ConverterApp(
+    viewModel: AppViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+    val topOrBottom = uiState.topClicked
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = MainScreen.valueOf(
         backStackEntry?.destination?.route ?: MainScreen.Start.name)
@@ -101,18 +99,27 @@ fun ConverterApp(
         ) {
             composable(route = MainScreen.Start.name) {
                 MainScreen(
+                    viewModel = viewModel,
+                    //appUiState = uiState,
                     //currency = ,
                     onNextButtonClicked = {
                         navController.navigate(MainScreen.Currency.name)
                     },
-                    onCryptoButtonClicked = {navController.navigate(MainScreen.MainCrypto.name)},
-                )
+                ) { navController.navigate(MainScreen.MainCrypto.name) }
             }
             composable(route = MainScreen.Currency.name) {
                 val context = LocalContext.current
                 CurrencyListPage(
                     onNextButtonClicked = { navController.navigate(MainScreen.Start.name) },
-                    onCardClicked = { navController.navigate(MainScreen.Start.name) },
+                    onCardClicked = {
+                        if (topOrBottom){
+                            viewModel.setTopCurrency(it)
+                        } else {
+                            viewModel.setBottomCurrency(it)
+                        }
+                        //println("currencylistpage: "+ topOrBottom)
+                        navController.navigate(MainScreen.Start.name)
+                                    },
                 )
             }
             composable(route = MainScreen.MainCrypto.name) {
