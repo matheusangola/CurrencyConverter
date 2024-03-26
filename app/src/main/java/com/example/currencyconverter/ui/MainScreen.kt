@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -55,11 +56,12 @@ fun MainScreen(
     val quantityBottomCurrency = uiState.quantityBottomCurrency
     var textValue by remember { mutableStateOf("") }
     var doubleValue by remember { mutableDoubleStateOf(0.0) }
-    Row {
-        Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+    Row (modifier = Modifier.size(600.dp)){
+        Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.size(600.dp)) {
             Button(
-                modifier = Modifier.fillMaxWidth().padding(25.dp),
-                onClick = {onNextButtonClicked()
+                modifier = Modifier.fillMaxWidth().padding(top = 60.dp, start = 25.dp, end = 25.dp, bottom = 25.dp),
+                onClick = {
+                    onNextButtonClicked()
                     viewModel.setTopClickedToTrue()
                 }
             ) {
@@ -81,11 +83,13 @@ fun MainScreen(
                         doubleValue = newValue.toDoubleOrNull() ?: 0.0
                         viewModel.setQuantityTopCurrency(doubleValue)
                         println(doubleValue)
-                    } )
+                    }
+                )
             }
             Button(
-                modifier = Modifier.fillMaxWidth() .padding(25.dp),
-                onClick = {onNextButtonClicked()
+                modifier = Modifier.fillMaxWidth() .padding(top = 60.dp, start = 25.dp, end = 25.dp, bottom = 25.dp),
+                onClick = {
+                    onNextButtonClicked()
                     viewModel.setTopClickedToFalse()
                 }
             ) {

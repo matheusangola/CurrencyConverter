@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -31,9 +30,6 @@ import com.example.currencyconverter.ui.CryptoListPage
 import com.example.currencyconverter.ui.CurrencyListPage
 import com.example.currencyconverter.ui.MainScreen
 import com.example.currencyconverter.ui.MainScreenCrypto
-import com.example.currencyconverter.ui.uiState
-//import com.example.currencyconverter.ui.currencies
-//import com.example.currencyconverter.ui.model.CurrencyRepository
 
 enum class MainScreen(@StringRes val title: Int) {
     Start(title = R.string.app_name),
@@ -47,7 +43,6 @@ enum class MainScreen(@StringRes val title: Int) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConverterAppBar(
-    viewModel: AppViewModel = viewModel(),
     currentScreen: MainScreen,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
@@ -100,39 +95,40 @@ fun ConverterApp(
             composable(route = MainScreen.Start.name) {
                 MainScreen(
                     viewModel = viewModel,
-                    //appUiState = uiState,
-                    //currency = ,
                     onNextButtonClicked = {
                         navController.navigate(MainScreen.Currency.name)
                     },
                 ) { navController.navigate(MainScreen.MainCrypto.name) }
             }
             composable(route = MainScreen.Currency.name) {
-                val context = LocalContext.current
                 CurrencyListPage(
-                    onNextButtonClicked = { navController.navigate(MainScreen.Start.name) },
                     onCardClicked = {
                         if (topOrBottom){
                             viewModel.setTopCurrency(it)
                         } else {
                             viewModel.setBottomCurrency(it)
                         }
-                        //println("currencylistpage: "+ topOrBottom)
                         navController.navigate(MainScreen.Start.name)
                                     },
                 )
             }
             composable(route = MainScreen.MainCrypto.name) {
                 MainScreenCrypto(
+                    viewModel = viewModel,
                     onNextButtonClicked = { navController.navigate(MainScreen.Crypto.name) },
                     onCryptoButtonClicked = { navController.navigate(MainScreen.Start.name) }
                     )
             }
             composable(route = MainScreen.Crypto.name) {
-                val context = LocalContext.current
                 CryptoListPage(
-                    onNextButtonClicked = { navController.navigate(MainScreen.Start.name) },
-                    onCardClicked = { navController.navigate(MainScreen.MainCrypto.name) }
+                    onCardClicked = {
+                        if (topOrBottom){
+                            viewModel.setTopCrypto(it)
+                        } else {
+                            viewModel.setBottomCrypto(it)
+                        }
+                        navController.navigate(MainScreen.MainCrypto.name)
+                    }
                 )
             }
         }

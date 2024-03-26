@@ -29,10 +29,8 @@ import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 
 @Composable
 fun CurrencyListPage(
-    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onCardClicked: (Currency) -> Unit,
-    onNextButtonClicked: () -> Unit
 ) {
     val currencies = DataSource.currencies
     LazyColumn(contentPadding = contentPadding) {
@@ -41,11 +39,7 @@ fun CurrencyListPage(
                 currency = currency,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                    //setTopCurrency(currency)
-                onCardClicked = { onCardClicked(currency)
-                                println("currencylistitems: " + uiState.value.topCurrency)
-                },
-                onNextButtonClicked = {}
+                onCardClicked = { onCardClicked(currency) },
             )
         }
     }
@@ -57,7 +51,6 @@ fun CurrencyListItems(
     currency: Currency,
     modifier: Modifier = Modifier,
     onCardClicked: () -> Unit,
-    onNextButtonClicked: () -> Unit
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -87,12 +80,6 @@ fun CurrencyListItems(
                     .clip(RoundedCornerShape(8.dp))
 
             ) {
-//                Image(
-//                    painter = painterResource(crypto.imageRes),
-//                    contentDescription = null,
-//                    alignment = Alignment.TopCenter,
-//                    contentScale = ContentScale.FillWidth
-//                )
             }
         }
     }
@@ -103,6 +90,6 @@ fun CurrencyListItems(
 @Composable
 fun CurrencyListPagePreview() {
     CurrencyConverterTheme {
-        CurrencyListPage(onCardClicked = { }, onNextButtonClicked = {})
+        CurrencyListPage(onCardClicked = {})
     }
 }

@@ -21,29 +21,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.currencyconverter.data.Crypto
 import com.example.currencyconverter.data.DataSource
-import com.example.currencyconverter.data.DataSource.cryptos
 import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 
 @Composable
 fun CryptoListPage(
-    modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    onCardClicked: () -> Unit,
-    onNextButtonClicked: () -> Unit
+    onCardClicked: (Crypto) -> Unit
 ) {
-    val currencies = DataSource.currencies
+    val cryptos = DataSource.cryptos
     LazyColumn(contentPadding = contentPadding) {
         itemsIndexed(cryptos) { _, crypto ->
             CryptoListItems(
                 crypto = crypto,
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                onCardClicked = onCardClicked
+                onCardClicked = { onCardClicked(crypto) },
+                onNextButtonClicked = {}
             )
         }
     }
@@ -55,6 +52,7 @@ fun CryptoListItems(
     crypto: Crypto,
     modifier: Modifier = Modifier,
     onCardClicked: () -> Unit,
+    onNextButtonClicked: () -> Unit
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -84,12 +82,6 @@ fun CryptoListItems(
                     .clip(RoundedCornerShape(8.dp))
 
             ) {
-//                Image(
-//                    painter = painterResource(crypto.imageRes),
-//                    contentDescription = null,
-//                    alignment = Alignment.TopCenter,
-//                    contentScale = ContentScale.FillWidth
-//                )
             }
         }
     }
@@ -100,6 +92,6 @@ fun CryptoListItems(
 @Composable
 fun CryptoListPagePreview() {
     CurrencyConverterTheme {
-        CryptoListPage(onCardClicked = { }, onNextButtonClicked = {})
+        CryptoListPage(onCardClicked = {})
     }
 }

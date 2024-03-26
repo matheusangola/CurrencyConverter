@@ -2,6 +2,7 @@ package com.example.currencyconverter.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.currencyconverter.data.AppUiState
+import com.example.currencyconverter.data.Crypto
 import com.example.currencyconverter.data.Currency
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,8 @@ class AppViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(AppUiState(topClicked = true))
     val uiState: StateFlow<AppUiState> = _uiState.asStateFlow()
+
+    //!!CURRENCY!!
 
     fun setTopClickedToFalse(){
         _uiState.update { currentState ->
@@ -41,7 +44,6 @@ class AppViewModel : ViewModel() {
                 topCurrency = currency
             )
         }
-        println("settopcurrency: " + _uiState.value.topCurrency?.Ticker)
     }
 
     fun setBottomCurrency(currency: Currency) {
@@ -50,7 +52,6 @@ class AppViewModel : ViewModel() {
                 bottomCurrency = currency
             )
         }
-        println("setbottomcurrency: " + _uiState.value.bottomCurrency?.Ticker)
     }
 
     fun setQuantityTopCurrency(enteredValue1: Double){
@@ -62,7 +63,7 @@ class AppViewModel : ViewModel() {
         }
     }
 
-    fun exchangeTopToBottom (topCurrency: Currency?, bottomCurrency: Currency?, quantityTopCurrency: Double): Double {
+    private fun exchangeTopToBottom (topCurrency: Currency?, bottomCurrency: Currency?, quantityTopCurrency: Double): Double {
         var newBottomValue = 0.0
         if (topCurrency!!.Ticker == "USD" && bottomCurrency!!.Ticker == "EUR") {
             newBottomValue = quantityTopCurrency * 0.92
@@ -136,6 +137,111 @@ class AppViewModel : ViewModel() {
             newBottomValue = quantityTopCurrency * 0.89
         } else if (topCurrency.Ticker == "AUD" && bottomCurrency!!.Ticker == "GBP") {
             newBottomValue = quantityTopCurrency * 0.51
+        }
+        return newBottomValue
+    }
+
+    //!!CRYPTO!!
+
+    fun setTopCrypto(crypto: Crypto) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                topCrypto = crypto
+            )
+        }
+    }
+
+    fun setBottomCrypto(crypto: Crypto) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                bottomCrypto = crypto
+            )
+        }
+    }
+
+    fun setQuantityTopCrypto(enteredValue1: Double){
+        _uiState.update { currentState ->
+            currentState.copy(
+                quantityTopCrypto = enteredValue1,
+                quantityBottomCrypto = exchangeTopToBottomCrypto(uiState.value.topCrypto, uiState.value.bottomCrypto, enteredValue1)
+            )
+        }
+    }
+
+    private fun exchangeTopToBottomCrypto (topCrypto: Crypto?, bottomCrypto: Crypto?, quantityTopCrypto: Double): Double {
+        var newBottomValue = 0.0
+        if (topCrypto!!.Ticker == "BTC" && bottomCrypto!!.Ticker == "BTC") {
+            newBottomValue = quantityTopCrypto * 1
+        } else if (topCrypto.Ticker == "BTC" && bottomCrypto!!.Ticker == "ETH") {
+            newBottomValue = quantityTopCrypto * 19.44
+        } else if (topCrypto.Ticker == "BTC" && bottomCrypto!!.Ticker == "ADA") {
+            newBottomValue = quantityTopCrypto * 105818
+        } else if (topCrypto.Ticker == "BTC" && bottomCrypto!!.Ticker == "BNB") {
+            newBottomValue = quantityTopCrypto * 119.14
+        } else if (topCrypto.Ticker == "BTC" && bottomCrypto!!.Ticker == "SOL") {
+            newBottomValue = quantityTopCrypto * 260845
+        } else if (topCrypto.Ticker == "BTC" && bottomCrypto!!.Ticker == "DOT") {
+            newBottomValue = quantityTopCrypto * 7079
+        } else if (topCrypto.Ticker == "ETH" && bottomCrypto!!.Ticker == "BTC") {
+            newBottomValue = quantityTopCrypto * 0.051
+        } else if (topCrypto.Ticker == "ETH" && bottomCrypto!!.Ticker == "DOT") {
+            newBottomValue = quantityTopCrypto * 368.89
+        } else if (topCrypto.Ticker == "ETH" && bottomCrypto!!.Ticker == "SOL") {
+            newBottomValue = quantityTopCrypto * 18.9
+        } else if (topCrypto.Ticker == "ETH" && bottomCrypto!!.Ticker == "BNB") {
+            newBottomValue = quantityTopCrypto * 6.14
+        } else if (topCrypto.Ticker == "ETH" && bottomCrypto!!.Ticker == "ADA") {
+            newBottomValue = quantityTopCrypto * 5447
+        } else if (topCrypto.Ticker == "ETH" && bottomCrypto!!.Ticker == "ETH") {
+            newBottomValue = quantityTopCrypto * 1
+        } else if (topCrypto.Ticker == "ADA" && bottomCrypto!!.Ticker == "ADA") {
+            newBottomValue = quantityTopCrypto * 1
+        } else if (topCrypto.Ticker == "ADA" && bottomCrypto!!.Ticker == "ETH") {
+            newBottomValue = quantityTopCrypto * 0.00018
+        } else if (topCrypto.Ticker == "ADA" && bottomCrypto!!.Ticker == "BNB") {
+            newBottomValue = quantityTopCrypto * 0.0011
+        } else if (topCrypto.Ticker == "ADA" && bottomCrypto!!.Ticker == "SOL") {
+            newBottomValue = quantityTopCrypto * 0.0036
+        } else if (topCrypto.Ticker == "ADA" && bottomCrypto!!.Ticker == "DOT") {
+            newBottomValue = quantityTopCrypto * 0.069
+        } else if (topCrypto.Ticker == "ADA" && bottomCrypto!!.Ticker == "BTC") {
+            newBottomValue = quantityTopCrypto * 0.0000094
+        } else if (topCrypto.Ticker == "BNB" && bottomCrypto!!.Ticker == "BNB") {
+            newBottomValue = quantityTopCrypto * 1
+        } else if (topCrypto.Ticker == "BNB" && bottomCrypto!!.Ticker == "ADA") {
+            newBottomValue = quantityTopCrypto * 888.14
+        } else if (topCrypto.Ticker == "BNB" && bottomCrypto!!.Ticker == "ETH") {
+            newBottomValue = quantityTopCrypto * 0.16
+        } else if (topCrypto.Ticker == "BNB" && bottomCrypto!!.Ticker == "SOL") {
+            newBottomValue = quantityTopCrypto * 3.06
+        } else if (topCrypto.Ticker == "BNB" && bottomCrypto!!.Ticker == "DOT") {
+            newBottomValue = quantityTopCrypto * 61.088
+        } else if (topCrypto.Ticker == "BNB" && bottomCrypto!!.Ticker == "BTC") {
+            newBottomValue = quantityTopCrypto * 0.0084
+        } else if (topCrypto.Ticker == "DOT" && bottomCrypto!!.Ticker == "DOT") {
+            newBottomValue = quantityTopCrypto * 1
+        } else if (topCrypto.Ticker == "DOT" && bottomCrypto!!.Ticker == "BNB") {
+            newBottomValue = quantityTopCrypto * 0.0162
+        } else if (topCrypto.Ticker == "DOT" && bottomCrypto!!.Ticker == "ADA") {
+            newBottomValue = quantityTopCrypto * 14.57
+        } else if (topCrypto.Ticker == "DOT" && bottomCrypto!!.Ticker == "ETH") {
+            newBottomValue = quantityTopCrypto * 0.0027
+        } else if (topCrypto.Ticker == "DOT" && bottomCrypto!!.Ticker == "SOL") {
+            newBottomValue = quantityTopCrypto * 0.052
+        } else if (topCrypto.Ticker == "DOT" && bottomCrypto!!.Ticker == "BTC") {
+            newBottomValue = quantityTopCrypto * 0.00014
+        } else if (topCrypto.Ticker == "SOL" && bottomCrypto!!.Ticker == "SOL") {
+            newBottomValue = quantityTopCrypto * 1
+        } else if (topCrypto.Ticker == "SOL" && bottomCrypto!!.Ticker == "DOT") {
+            newBottomValue = quantityTopCrypto * 19.86
+        } else if (topCrypto.Ticker == "SOL" && bottomCrypto!!.Ticker == "BNB") {
+            newBottomValue = quantityTopCrypto * 0.3231
+        } else if (topCrypto.Ticker == "SOL" && bottomCrypto!!.Ticker == "ADA") {
+            newBottomValue = quantityTopCrypto * 276.93
+        } else if (topCrypto.Ticker == "SOL" && bottomCrypto!!.Ticker == "ETH") {
+            newBottomValue = quantityTopCrypto * 0.0540
+        } else if (topCrypto.Ticker == "SOL" && bottomCrypto!!.Ticker == "BTC") {
+            newBottomValue = quantityTopCrypto * 0.0028
         }
         return newBottomValue
     }
