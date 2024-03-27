@@ -1,24 +1,22 @@
 package com.example.currencyconverter.ui
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.ScrollableTabRow
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,10 +26,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,7 +64,11 @@ fun MainScreenCrypto(
                 }
             }
             Row (verticalAlignment = Alignment.CenterVertically){
-                Image(painter = painterResource(id = R.drawable.crypto), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
+                val imageSource = when (isSystemInDarkTheme()) {
+                    true -> R.drawable.cryptodark
+                    else -> R.drawable.crypto
+                }
+                Image(painter = painterResource(id = imageSource), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
                 OutlinedTextField(
                     value = textValue,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -95,28 +95,58 @@ fun MainScreenCrypto(
                 }
             }
             Row (verticalAlignment = Alignment.CenterVertically){
-                Image(painter = painterResource(id = R.drawable.crypto), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
+                val imageSource = when (isSystemInDarkTheme()) {
+                    true -> R.drawable.cryptodark
+                    else -> R.drawable.crypto
+                }
+                Image(painter = painterResource(id = imageSource), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
                 OutlinedTextField(readOnly = true, value = quantityBottomCrypto.toString(), onValueChange = { } )
             }
-            Row (verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center){
+            var toggled by remember {
+                mutableStateOf(false)
+            }
+            var toggled2 by remember {
+                mutableStateOf(false)
+            }
+            val animatedPadding by animateDpAsState(
+                if (toggled) {
+                    25.dp
+                } else {
+                    8.dp
+                },
+                label = "shape"
+            )
+            val animatedPadding2 by animateDpAsState(
+                if (toggled2) {
+                    25.dp
+                } else {
+                    8.dp
+                },
+                label = "shape"
+            )
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
                 OutlinedButton(
                     modifier = Modifier.width(180.dp).height(130.dp).padding(top = 60.dp, start = 10.dp, end = 10.dp),
-                    onClick = onCryptoButtonClicked
+                    onClick = {onCryptoButtonClicked(); toggled = !toggled},
+                    shape = RoundedCornerShape(animatedPadding)
                 ) {
                     Text(
-                        text = "Dollar",
-                        fontSize = 40.sp
+                        text = "Money",
+                        fontSize = 35.sp
                     )
                 }
 
                 Button(
-                    onClick = {  },
+                    onClick = { toggled2 = !toggled2 },
+                    shape = RoundedCornerShape(animatedPadding2),
                     modifier = Modifier.width(180.dp).height(130.dp).padding(top = 60.dp, start = 10.dp, end = 2.dp),
                 ) {
                     Text(
                         text = "Crypto",
-                        fontSize = 40.sp
+                        fontSize = 35.sp
                     )
                 }
             }

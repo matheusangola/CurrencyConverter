@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-sealed interface AppUiStateInt {
-    data class Success(val photos: String) : AppUiStateInt
-    object Error : AppUiStateInt
-    object Loading : AppUiStateInt
-}
+//sealed interface AppUiStateInt {
+//    data class Success(val photos: String) : AppUiStateInt
+//    object Error : AppUiStateInt
+//    object Loading : AppUiStateInt
+//}
 
 class AppViewModel : ViewModel() {
 
@@ -59,6 +59,34 @@ class AppViewModel : ViewModel() {
             currentState.copy(
                 quantityTopCurrency = enteredValue1,
                 quantityBottomCurrency = exchangeTopToBottom(uiState.value.topCurrency, uiState.value.bottomCurrency, enteredValue1)
+            )
+        }
+    }
+
+
+    //!!CRYPTO!!
+
+    fun setTopCrypto(crypto: Crypto) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                topCrypto = crypto
+            )
+        }
+    }
+
+    fun setBottomCrypto(crypto: Crypto) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                bottomCrypto = crypto
+            )
+        }
+    }
+
+    fun setQuantityTopCrypto(enteredValue1: Double){
+        _uiState.update { currentState ->
+            currentState.copy(
+                quantityTopCrypto = enteredValue1,
+                quantityBottomCrypto = exchangeTopToBottomCrypto(uiState.value.topCrypto, uiState.value.bottomCrypto, enteredValue1)
             )
         }
     }
@@ -139,33 +167,6 @@ class AppViewModel : ViewModel() {
             newBottomValue = quantityTopCurrency * 0.51
         }
         return newBottomValue
-    }
-
-    //!!CRYPTO!!
-
-    fun setTopCrypto(crypto: Crypto) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                topCrypto = crypto
-            )
-        }
-    }
-
-    fun setBottomCrypto(crypto: Crypto) {
-        _uiState.update { currentState ->
-            currentState.copy(
-                bottomCrypto = crypto
-            )
-        }
-    }
-
-    fun setQuantityTopCrypto(enteredValue1: Double){
-        _uiState.update { currentState ->
-            currentState.copy(
-                quantityTopCrypto = enteredValue1,
-                quantityBottomCrypto = exchangeTopToBottomCrypto(uiState.value.topCrypto, uiState.value.bottomCrypto, enteredValue1)
-            )
-        }
     }
 
     private fun exchangeTopToBottomCrypto (topCrypto: Crypto?, bottomCrypto: Crypto?, quantityTopCrypto: Double): Double {

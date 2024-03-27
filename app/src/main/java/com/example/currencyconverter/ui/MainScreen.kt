@@ -1,7 +1,9 @@
 package com.example.currencyconverter.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
@@ -30,16 +33,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.currencyconverter.R
 import com.example.currencyconverter.data.AppUiState
-import com.example.currencyconverter.data.DataSource
 import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-val currencies = DataSource.currencies
 
 private val _uiState = MutableStateFlow(AppUiState(topClicked = true))
 val uiState: StateFlow<AppUiState> = _uiState.asStateFlow()
@@ -59,7 +59,9 @@ fun MainScreen(
     Row (modifier = Modifier.size(600.dp)){
         Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.size(600.dp)) {
             Button(
-                modifier = Modifier.fillMaxWidth().padding(top = 60.dp, start = 25.dp, end = 25.dp, bottom = 25.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 60.dp, start = 25.dp, end = 25.dp, bottom = 25.dp),
                 onClick = {
                     onNextButtonClicked()
                     viewModel.setTopClickedToTrue()
@@ -74,7 +76,15 @@ fun MainScreen(
 
             }
             Row (verticalAlignment = Alignment.CenterVertically){
-                Image(painter = painterResource(id = R.drawable.money), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
+                val imageSource = when (isSystemInDarkTheme()) {
+                    true -> R.drawable.moneydark
+                    else -> R.drawable.money
+                }
+                Image(
+                    painter = painterResource(id = imageSource), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier
+                    .width(60.dp)
+                    .padding(10.dp)
+                )
                 OutlinedTextField(
                     value = textValue,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -87,7 +97,9 @@ fun MainScreen(
                 )
             }
             Button(
-                modifier = Modifier.fillMaxWidth() .padding(top = 60.dp, start = 25.dp, end = 25.dp, bottom = 25.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 60.dp, start = 25.dp, end = 25.dp, bottom = 25.dp),
                 onClick = {
                     onNextButtonClicked()
                     viewModel.setTopClickedToFalse()
@@ -101,29 +113,68 @@ fun MainScreen(
                 }
             }
             Row (verticalAlignment = Alignment.CenterVertically){
-                Image(painter = painterResource(id = R.drawable.money), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.width(60.dp) .padding(10.dp))
+                val imageSource = when (isSystemInDarkTheme()) {
+                    true -> R.drawable.moneydark
+                    else -> R.drawable.money
+                }
+                Image(
+                    painter = painterResource( id = imageSource), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier
+                    .width(60.dp)
+                    .padding(10.dp)
+                )
                 OutlinedTextField(readOnly = true, value = quantityBottomCurrency.toString(), onValueChange = { } )
             }
-            Row (verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center){
+            var toggled by remember {
+                mutableStateOf(false)
+            }
+            var toggled2 by remember {
+                mutableStateOf(false)
+            }
+            val animatedPadding by animateDpAsState(
+                if (toggled) {
+                    8.dp
+                } else {
+                    25.dp
+                },
+                label = "shape"
+            )
+            val animatedPadding2 by animateDpAsState(
+                if (toggled2) {
+                    8.dp
+                } else {
+                    25.dp
+                },
+                label = "shape"
+            )
+            Row (
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
                 Button(
-                    modifier = Modifier.width(180.dp).height(130.dp).padding(top = 60.dp, start = 10.dp, end = 10.dp),
-                    onClick = {  }
+                    modifier = Modifier
+                        .width(180.dp)
+                        .height(130.dp)
+                        .padding(top = 60.dp, start = 10.dp, end = 10.dp),
+                    onClick = { toggled2 = !toggled2 },
+                    shape = RoundedCornerShape(animatedPadding2)
                 ) {
                     Text(
-                        text = "Dollar",
-                        fontSize = 40.sp
+                        text = "Money",
+                        fontSize = 35.sp
                     )
                 }
 
                 OutlinedButton(
-                    onClick = onCryptoButtonClicked,
-                    modifier = Modifier.width(180.dp).height(130.dp)
+                    onClick = {onCryptoButtonClicked(); toggled = !toggled},
+                    shape = RoundedCornerShape(animatedPadding),
+                    modifier = Modifier
+                        .width(180.dp)
+                        .height(130.dp)
                         .padding(top = 60.dp, start = 10.dp, end = 2.dp)
                 ) {
                     Text(
                         text = "Crypto",
-                        fontSize = 40.sp
+                        fontSize = 35.sp
                     )
                 }
             }

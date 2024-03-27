@@ -40,7 +40,6 @@ fun CryptoListPage(
                 modifier = Modifier
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 onCardClicked = { onCardClicked(crypto) },
-                onNextButtonClicked = {}
             )
         }
     }
@@ -52,7 +51,6 @@ fun CryptoListItems(
     crypto: Crypto,
     modifier: Modifier = Modifier,
     onCardClicked: () -> Unit,
-    onNextButtonClicked: () -> Unit
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
