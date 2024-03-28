@@ -57,7 +57,11 @@ fun MainScreen(
     var textValue by remember { mutableStateOf("") }
     var doubleValue by remember { mutableDoubleStateOf(0.0) }
     Row (modifier = Modifier.size(600.dp)){
-        Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.size(600.dp)) {
+        Column (
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.size(600.dp)
+        ) {
             Button(
                 modifier = Modifier
                     .fillMaxWidth()

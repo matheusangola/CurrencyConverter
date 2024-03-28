@@ -48,7 +48,10 @@ fun MainScreenCrypto(
     var textValue by remember { mutableStateOf("") }
     var doubleValue by remember { mutableDoubleStateOf(0.0) }
     Row (modifier = Modifier.size(600.dp)){
-        Column (verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.size(600.dp)) {
+        Column (
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.size(600.dp)) {
             Button(
                 modifier = Modifier.fillMaxWidth() .padding(top = 60.dp, start = 25.dp, end = 25.dp, bottom = 25.dp),
                 onClick = {
