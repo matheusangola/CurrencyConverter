@@ -77,7 +77,6 @@ fun MainScreen(
                             fontSize = 20.sp
                         )
                     }
-
             }
             Row (verticalAlignment = Alignment.CenterVertically){
                 val imageSource = when (isSystemInDarkTheme()) {
@@ -126,7 +125,7 @@ fun MainScreen(
                     .width(60.dp)
                     .padding(10.dp)
                 )
-                OutlinedTextField(readOnly = true, value = quantityBottomCurrency.toString(), onValueChange = { } )
+                OutlinedTextField(readOnly = true, value = String.format("%.2f", quantityBottomCurrency), onValueChange = { } )
             }
             var toggled by remember {
                 mutableStateOf(false)
@@ -167,7 +166,6 @@ fun MainScreen(
                         fontSize = 35.sp
                     )
                 }
-
                 OutlinedButton(
                     onClick = {onCryptoButtonClicked(); toggled = !toggled},
                     shape = RoundedCornerShape(animatedPadding),
@@ -184,7 +182,6 @@ fun MainScreen(
             }
         }
     }
-
 }
 val viewModel = AppViewModel()
 @Preview(showBackground = true)

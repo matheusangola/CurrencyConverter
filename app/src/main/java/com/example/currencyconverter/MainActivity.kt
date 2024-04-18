@@ -14,22 +14,23 @@ import com.example.currencyconverter.ui.theme.CurrencyConverterTheme
 import com.example.currencyconverter.ui.viewModel
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CurrencyConverterTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     ConverterApp()
-
                 }
             }
         }
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable

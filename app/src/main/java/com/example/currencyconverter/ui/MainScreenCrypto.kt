@@ -141,7 +141,6 @@ fun MainScreenCrypto(
                         fontSize = 35.sp
                     )
                 }
-
                 Button(
                     onClick = { toggled2 = !toggled2 },
                     shape = RoundedCornerShape(animatedPadding2),

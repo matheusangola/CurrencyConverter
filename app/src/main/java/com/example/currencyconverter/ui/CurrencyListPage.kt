@@ -78,13 +78,11 @@ fun CurrencyListItems(
                 modifier = Modifier
                     .size(72.dp)
                     .clip(RoundedCornerShape(8.dp))
-
             ) {
             }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -18,9 +18,9 @@ data class AppUiState(
 
     var topCrypto: Crypto? = Crypto("BTC", "Bitcoin"),
 
-    val bottomCrypto: Crypto? = Crypto("ETH", "Ethereum")
+    val bottomCrypto: Crypto? = Crypto("ETH", "Ethereum"),
 
+    var allRates: MutableList<CurrencyRate> = mutableListOf(),
 
-
-
+    var allCryptoRates: MutableList<CryptoRate> = mutableListOf()
 )
